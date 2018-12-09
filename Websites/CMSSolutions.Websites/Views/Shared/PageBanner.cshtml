@@ -1,0 +1,20 @@
+﻿@model CMSSolutions.Websites.Models.DataViewerModel
+
+<div class="container">
+    @if (Model.Banner != null)
+    {
+        <div class="col-md-6 text-center inside">
+           
+            <h2>@Model.Banner.Title</h2>
+            <p>
+                @Html.Raw(Model.Banner.Caption)
+            </p>
+            <div class="btn-custom">
+                <a href="@Model.Banner.Url">@Model.Settings.TextExplore</a>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <img class="img-responsive image-center" src="@Model.Banner.ImageUrl" />
+        </div>
+    }
+</div>

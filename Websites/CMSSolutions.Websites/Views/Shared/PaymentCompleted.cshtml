@@ -1,0 +1,21 @@
+﻿@model CMSSolutions.Websites.Models.DataViewerModel
+<section id="SectionConfirmCart">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                @if (Model.Status)
+                {
+                    <div class="alert alert-success">
+                        @Model.Data
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-danger">
+                        @Model.Data
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>

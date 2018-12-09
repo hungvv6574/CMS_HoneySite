@@ -1,0 +1,12 @@
+﻿@model CMSSolutions.Websites.Models.DataViewerModel
+<div class="product-banner-bgr">
+<div id="product-banner">
+    @if (Model.Banner != null)
+    {
+        <h1>@Model.Banner.Title</h1>
+        <div class="logo-banner">
+            <img class="img-responsive image-center" src="@Model.Banner.ImageUrl" />
+        </div>
+        <p>@Model.Banner.Caption</p>
+    }
+</div></div>

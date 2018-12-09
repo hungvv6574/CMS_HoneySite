@@ -1,0 +1,20 @@
+﻿@model CMSSolutions.Websites.Models.DataViewerModel
+
+<section id="SectionNewsDetails">
+    <div class="container">
+        <div class="col-md-12 header-details">
+            <img class="img-responsive" src="@Model.Articles.BannerUrl" alt="@Model.Articles.Title"/>
+            <h1>@Model.Articles.Title</h1>
+            <div class="border-yellow"></div>
+        </div>
+        <div class="col-md-12 news-viewer">
+            @Html.Raw(Model.Articles.Contents)
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".news-viewer img").parent().css("min-width", "500px");
+        $(".news-viewer img").addClass("img-responsive");
+    });
+</script>

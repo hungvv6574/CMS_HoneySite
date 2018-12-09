@@ -1,0 +1,121 @@
+﻿@model CMSSolutions.Websites.Models.DataViewerModel
+
+<section id="SectionProductDetails">
+    @if (Model.Products != null)
+    {
+        var firstItem = Model.Products.FirstOrDefault();
+        <div class="container" style="background-image: url('@Model.ProductGroup.BackgroundImageUrl');background-repeat: no-repeat;background-position: 156px 18px;">
+            <div class="col-md-5">
+                <img id="productImage" src="@firstItem.Image" alt="@Html.Raw(firstItem.Name)"/>
+                <div class="box-products">
+                    <ul class="nav">
+                        @foreach (var item in Model.Products)
+                        {
+                            if (item.Id == firstItem.Id)
+                            {
+                                <li style="border: 0.5px solid #f58223;" onclick="showProductDetails(this, @item.Id);">
+                                    <img src="@item.Image" title="@Html.Raw(item.Name + " " + item.CapacityName)"/>
+                                </li>
+                            }
+                            else
+                            {
+                                <li onclick="showProductDetails(this, @item.Id);">
+                                    <img src="@item.Image" title="@Html.Raw(item.Name + " " + item.CapacityName)"/>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="Product-detail-text">
+                    <div>
+                        <h2 id="productName">@Html.Raw(firstItem.Name)</h2>
+                        <div id="productContents" class="Product-content-detail">@Html.Raw(firstItem.Contents)</div>
+                    </div>
+                </div>
+                <div class="form-detail">
+                    <form id="frmShopping" class="form-inline">
+                        <input type="hidden" id="txtProductIds" name="txtProductIds" value="@(string.Join(",", Model.Products.Select(x => x.Id).ToArray()))"/>
+                        <ul class="nav product-details">
+                            @foreach (var productInfo in Model.Products)
+                            {
+                                <li>
+                                    <label class="label-text proform-width">@productInfo.CapacityName</label>
+                                    <input type="text" id="@("txtQuantity_" + productInfo.Id)" name="@("txtQuantity_" + productInfo.Id)" class="form-control proform-width fix-size validate[required, custom[integer], min[0], max[99]]" value="0"/>
+                                    <input type="text" id="@("txtPrice_" + productInfo.Id)" name="@("txtPrice_" + productInfo.Id)" disabled="disabled" class="proform-width form-control" value="@(Utilities.GetCurrency(productInfo.Price.ToString()) + " VNĐ")"/>
+                                </li>
+                            }
+                            <li style="padding-top: 20px;">
+                                <div class="btn-prodetailform">
+                                    <a href="javascript: onClickAddToCart();">@Model.Settings.ButtonAddToCart</a>
+                                </div>
+                                <div class="btn-prodetailform">
+                                    <a href="javascript: onClickBuyNow();">@Model.Settings.ButtonBuy</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $("#frmShopping").validationEngine();
+                    });
+
+                    function showProductDetails(obj, id) {
+                        $(".box-products li").each(function (index) {
+                            $(this).css("border", "0.5px solid #cccccc");
+                        });
+                        $(obj).css("border", "0.5px solid #f58223");
+
+                        $.ajax({
+                            url: '@Url.Action("GetProductDetails", "Product")',
+                            data: { "ProductId": id },
+                            type: 'POST',
+                            dataType: 'json',
+                            success: function (result) {
+                                if (result.Product != null) {
+                                    $("#productImage").attr("src", result.Product.Image);
+                                    $("#productName").html(result.Product.Name);
+                                    $("#productContents").html(result.Product.Contents);
+                                } else {
+                                    alert("Không tìm thấy sản phẩm này.");
+                                }
+                            }
+                        });
+                    }
+
+                    function onClickAddToCart() {
+                        if (!validateCart()) {
+                            return;
+                        }
+
+                        var data = $("#frmShopping").find("input, textarea").serialize();
+                        $.ajax({
+                            url: '@Url.Action("AddToCart", "ShoppingCart")',
+                            data: data,
+                            type: 'POST',
+                            dataType: 'json',
+                            success: function (result) {
+                                alert(result.Data);
+                            }
+                        });
+                    }
+
+                    function onClickBuyNow() {
+                        if (!validateCart()) {
+                            return;
+                        }
+                        $('#frmShopping').attr('method', 'POST');
+                        $('#frmShopping').attr('action', '@Url.Action("BuyNow", "Payment")');
+                        $("#frmShopping").submit();
+                    }
+                    function validateCart() {
+                        return $("#frmShopping").validationEngine('validate');
+                    }
+                </script>
+            </div>
+        </div>
+    }
+</section>

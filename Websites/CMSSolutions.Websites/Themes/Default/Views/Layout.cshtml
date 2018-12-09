@@ -1,0 +1,183 @@
+﻿@using CMSSolutions.Websites.Controllers
+@using CMSSolutions.Websites.Extensions
+@{
+    Style.IncludeBootstrap();
+    Style.IncludeScrollbar();
+    Style.IncludeJQueryUI();
+    Style.IncludeJQueryvalidationEngine();
+    Style.IncludeThemesDefaults();
+
+    Script.IncludeJQuery();
+    Script.IncludeJQueryUI();
+    Script.IncludeBootstrap();
+    Script.IncludeKnockout();
+    Script.IncludeAccounting();
+    Script.IncludeJQueryvalidationEngine(WorkContext.CurrentCulture ?? "vi-VN");
+    Script.IncludeScrollbar();
+    Script.IncludeJssorSlider();
+    Script.IncludeThemesDefaults();
+    var currentSettings = WorkContext.Resolve<CommonSettings>();
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <meta name="robots" content="index, follow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="@ViewData[CMSSolutions.Websites.Extensions.Constants.SeoDescription]" />
+    <meta name="keywords" itemprop="keywords" content="@ViewData[CMSSolutions.Websites.Extensions.Constants.SeoKeywords]" />
+    
+    <meta property="og:title" content="@ViewData[CMSSolutions.Websites.Extensions.Constants.SeoTitle]"/>
+    <meta property="og:url" content="Q-Honey" />
+    <meta property="og:image" content="" />
+    <meta property="og:description" content="@ViewData[CMSSolutions.Websites.Extensions.Constants.SeoDescription]"/>
+
+    <meta http-equiv="Language" content="vi" />
+    <meta name="content-language" content="vi" />
+    <meta name="language" content="vi" />
+    <meta name="author" content="Q-Honey" />
+    <meta name="copyright" content="Copyright 2016" />
+    <link rel="shortcut icon" href="/Media/Default/Logo/favicon.ico" type="image/x-icon" />
+    
+    <title>@ViewData[CMSSolutions.Websites.Extensions.Constants.SeoTitle]</title>
+
+    @RenderMetas()
+    @RenderStyles()
+    <link href="/Media/Default/WebFont/CustomFont.css" rel="stylesheet" />
+
+    @RenderHeadScripts()
+    
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+@*    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-86573934-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>*@
+</head>
+    <body id="page-top">
+        <header id="page-header">
+            <nav id="page-menu" class="navbar navbar-default" role="navigation">
+                <div class="container">
+                    @Display(WorkContext.Layout.PageNavigationMenu)
+                </div>
+            </nav>
+        </header>
+
+        <div id="page-body">
+            <section id="SectionBanner">
+                @Display(WorkContext.Layout.SectionBanner)
+
+                @Html.Partial("PageControls")
+            </section>
+
+            @Display(WorkContext.Layout.SectionProducts)
+            
+            @Display(WorkContext.Layout.SectionBlog)
+        </div>
+        @Display(WorkContext.Layout.Content)
+
+        @Display(WorkContext.Layout.PageFooter)
+
+        <footer id="page-footer">
+            <div class="container">
+                <div class="footer-menu">
+                    @Display(WorkContext.Layout.PageFooterMenu)
+                </div>
+                <div class="row footer-content">
+                    
+                    <div class="col-md-4 item-box">
+                        @Display(WorkContext.Layout.PageFooterAddress)
+                    </div>
+                    <div class="col-md-4">
+                        <div class="network-icon">
+                            @Display(WorkContext.Layout.PageFooterSocialNetwork)
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <form id="frmReceiveEmail">
+                            <input type="text" id="txtEmailAddress" name="txtEmailAddress" class="text-email validate[required, maxSize[50], custom[email]]" />
+                            <a href="javascript: onClickReceiveEmail();" class="btn-submit" id="btnSave">@currentSettings.ContactButtonSend</a>
+                        </form>
+                        <script type="text/javascript">
+                            $(document).ready(function () {
+                                $("#frmReceiveEmail").validationEngine();
+                            });
+
+                            function onClickReceiveEmail() {
+                                if (!validateReceiveEmail()) {
+                                    return;
+                                }
+                                var data = $("#frmReceiveEmail").find("input").serialize();
+                                $.ajax({
+                                    url: "@Url.Action("ReceiveEmail", "Home")",
+                                    data: data,
+                                    type: 'POST',
+                                    dataType: 'JSON',
+                                    success: function (result) {
+                                        alert(result.Data);
+                                        if (result.Status) {
+                                            $("#txtEmailAddress").val("");
+                                        }
+                                    },
+                                    error: function (ex, textStatus, errorThrown) {
+                                        alert("Gửi thất bại.");
+                                    }
+                                });
+                            }
+                            function validateReceiveEmail() {
+                                return $("#frmReceiveEmail").validationEngine('validate');
+                            }
+                        </script>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    @*<img alt="2016 © QHoney. All Rights Reserved" src="/Media/Default/Themes/qhney_copyright.png" />*@
+                    <p>2016 © QHoney. All Rights Reserved</p>
+                </div>
+            </div>
+        </footer>
+
+        @RenderFootScripts()
+        <script type="text/javascript">
+            $(document).ready(function () {
+                var pgurl = "/" + window.location.href.substr(window.location.href.lastIndexOf("/") + 1);
+                $("#page-menu .menu-font li a").each(function () {
+                    var url = $(this).attr("href");
+                    if (url == pgurl || url == '') {
+                        $("#page-menu .menu-font li").removeClass('active');
+                        $(this).parent().addClass("active");
+                    } else {
+                        var pathname = window.location.pathname;
+                        if (pathname.startsWith("/san-pham/")) {
+                            $("#page-menu .menu-font li").removeClass('active');
+                            $("#page-menu .menu-font li a[href='/san-pham']").parent().addClass("active");
+                        }
+                        if (pathname.startsWith("/tin-tuc/")) {
+                            $("#page-menu .menu-font li").removeClass('active');
+                            $("#page-menu .menu-font li a[href='/tin-tuc']").parent().addClass("active");
+                        }
+                        if (pathname == "/gio-hang" || pathname.startsWith("/thanh-toan")) {
+                            $("#page-menu .menu-font li").removeClass('active');
+                            $("#page-menu .menu-font li a[href='/san-pham']").parent().addClass("active");
+                        }
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

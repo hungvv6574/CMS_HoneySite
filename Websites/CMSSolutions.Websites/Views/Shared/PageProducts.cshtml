@@ -1,0 +1,29 @@
+﻿@model CMSSolutions.Websites.Models.DataViewerModel
+
+<section id="SectionProducts">
+    <div class="container store">
+        <h2>@Model.Settings.HomeTitleProduct</h2>
+        @if (Model.ListProductGroup != null)
+        {
+            foreach (var item in Model.ListProductGroup)
+            {
+                var url = Url.Action("ProductDetails", "Product", new { alias = item.Alias });
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <a href="@url" title="@item.GroupName">
+                        <img class="img-responsive image-center" src="@item.HomeImageUrl" />
+                    </a>
+                    <div class="homepage_prolist">
+                        <h3>
+                            <a href="@url">
+                                @item.GroupName
+                            </a>
+                        </h3>
+                        <div class="homepage_prolist-des">@item.Notes</div>
+                    </div>
+                    <div class="btn-custom"><a href="@url">@Model.Settings.HomeButtonProduct</a></div>
+                </div>
+            }
+        }
+    </div>
+    <div class="clearfix"></div>
+</section>

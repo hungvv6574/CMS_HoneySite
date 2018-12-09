@@ -1,0 +1,67 @@
+﻿@using CMSSolutions.Websites.Entities
+@model CMSSolutions.Websites.Models.DataViewerModel
+@{
+    ArticlesInfo item1 = null;
+    ArticlesInfo item2 = null;
+    ArticlesInfo item3 = null;
+    if (Model.ListArticles.Count > 0)
+    {
+        item1 = Model.ListArticles[0];
+    }
+    if (Model.ListArticles.Count > 1)
+    {
+        item2 = Model.ListArticles[1];
+    }
+    if (Model.ListArticles.Count > 2)
+    {
+        item3 = Model.ListArticles[2];
+    }
+}
+
+<section id="SectionAboutUs">
+    <div class="container">
+        @if (item1 != null)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="title1">
+                        @item1.Title
+                    </h2>
+                    <div class="css-box">
+                        @Html.Raw(item1.Contents)
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="row">
+            <div class="col-md-7">
+                @if (item2 != null)
+                {
+                    <h2 class="title2">
+                        @item2.Title
+                    </h2>
+                    <div class="css-box">
+                        @Html.Raw(item2.Contents)
+                    </div>
+                }
+                <div class="clearfix"></div>
+                @if (item3 != null)
+                {
+                    <h2 class="title3">
+                        @item3.Title
+                    </h2>
+                    <div class="css-box">
+                        @Html.Raw(item3.Contents)
+                    </div>
+                }
+            </div>
+            @if (item1 != null)
+            {
+                <div class="col-md-5 about-image">
+                    <img class="img-responsive" src="@item1.Image"/>
+                </div>
+            }
+        </div>
+    </div>
+</section>

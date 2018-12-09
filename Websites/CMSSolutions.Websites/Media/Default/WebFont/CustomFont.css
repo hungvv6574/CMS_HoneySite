@@ -1,0 +1,80 @@
+﻿    @font-face {
+        font-family: 'AvenirNextRoundedIt';
+        src: url('AvenirNextRoundedPro/AvenirNextRoundedIt.eot');
+        src: url('AvenirNextRoundedPro/AvenirNextRoundedIt.eot') format('embedded-opentype'),
+             url('AvenirNextRoundedPro/AvenirNextRoundedIt.woff2') format('woff2'),
+             url('AvenirNextRoundedPro/AvenirNextRoundedIt.woff') format('woff'),
+             url('AvenirNextRoundedPro/AvenirNextRoundedIt.ttf') format('truetype'),
+             url('AvenirNextRoundedPro/AvenirNextRoundedIt.svg#AvenirNextRoundedIt') format('svg');
+    }
+    @font-face {
+        font-family: 'AvenirNextRoundedProBold';
+        src: url('AvenirNextRoundedPro/AvenirNextRoundedProBold.eot');
+        src: url('AvenirNextRoundedPro/AvenirNextRoundedProBold.eot') format('embedded-opentype'),
+             url('AvenirNextRoundedPro/AvenirNextRoundedProBold.woff2') format('woff2'),
+             url('AvenirNextRoundedPro/AvenirNextRoundedProBold.woff') format('woff'),
+             url('AvenirNextRoundedPro/AvenirNextRoundedProBold.ttf') format('truetype'),
+             url('AvenirNextRoundedPro/AvenirNextRoundedProBold.svg#AvenirNextRoundedProBold') format('svg');
+    }
+    @font-face {
+        font-family: 'AvenirNextRoundedDemi';
+        src: url('AvenirNextRoundedPro/AvenirNextRoundedDemi.eot');
+        src: url('AvenirNextRoundedPro/AvenirNextRoundedDemi.eot') format('embedded-opentype'),
+             url('AvenirNextRoundedPro/AvenirNextRoundedDemi.woff2') format('woff2'),
+             url('AvenirNextRoundedPro/AvenirNextRoundedDemi.woff') format('woff'),
+             url('AvenirNextRoundedPro/AvenirNextRoundedDemi.ttf') format('truetype'),
+             url('AvenirNextRoundedPro/AvenirNextRoundedDemi.svg#AvenirNextRoundedDemi') format('svg');
+    }
+    @font-face {
+        font-family: 'AvenirNextRoundedMed';
+        src: url('AvenirNextRoundedPro/AvenirNextRoundedMed.eot');
+        src: url('AvenirNextRoundedPro/AvenirNextRoundedMed.eot') format('embedded-opentype'),
+             url('AvenirNextRoundedPro/AvenirNextRoundedMed.woff2') format('woff2'),
+             url('AvenirNextRoundedPro/AvenirNextRoundedMed.woff') format('woff'),
+             url('AvenirNextRoundedPro/AvenirNextRoundedMed.ttf') format('truetype'),
+             url('AvenirNextRoundedPro/AvenirNextRoundedMed.svg#AvenirNextRoundedMed') format('svg');
+    }
+    @font-face {
+        font-family: 'AvenirNextRoundedReg';
+        src: url('AvenirNextRoundedPro/AvenirNextRoundedReg.eot');
+        src: url('AvenirNextRoundedPro/AvenirNextRoundedReg.eot') format('embedded-opentype'),
+             url('AvenirNextRoundedPro/AvenirNextRoundedReg.woff2') format('woff2'),
+             url('AvenirNextRoundedPro/AvenirNextRoundedReg.woff') format('woff'),
+             url('AvenirNextRoundedPro/AvenirNextRoundedReg.ttf') format('truetype'),
+             url('AvenirNextRoundedPro/AvenirNextRoundedReg.svg#AvenirNextRoundedReg') format('svg');
+    }
+    /**@font-face {
+        font-family: 'Kavaler_Kursive';
+        src: url('Kavaler_Kursive/Kavaler_Kursive.eot');
+        src: url('Kavaler_Kursive/Kavaler_Kursive.eot') format('embedded-opentype'),
+             url('Kavaler_Kursive/Kavaler_Kursive.woff') format('woff'),
+             url('Kavaler_Kursive/Kavaler_Kursive.ttf') format('truetype'),
+             url('Kavaler_Kursive/Kavaler_Kursive.svg#Kavaler_Kursive') format('svg');
+    }**/
+    /**@font-face {
+        font-family: 'MyriadProLight';
+        src: url('MyriadProLight/MyriadPro-Light.eot');
+        src: url('MyriadProLight/MyriadPro-Light.eot') format('embedded-opentype'),
+             url('MyriadProLight/MyriadPro-Light.woff2') format('woff2'),
+             url('MyriadProLight/MyriadPro-Light.woff') format('woff'),
+             url('MyriadProLight/MyriadPro-Light.ttf') format('truetype'),
+             url('MyriadProLight/MyriadPro-Light.svg#MyriadProLight') format('svg');
+    }**/
+    @font-face {
+        font-family: 'MyriadProLight';
+        src: url('MyriadProLight/Myriad-pro-regular.eot');
+        src: url('MyriadProLight/Myriad-pro-regular.eot') format('embedded-opentype'),
+             url('MyriadProLight/Myriad-pro-regular.woff2') format('woff2'),
+             url('MyriadProLight/Myriad-pro-regular.woff') format('woff'),
+             url('MyriadProLight/Myriad-pro-regular.ttf') format('truetype'),
+             url('MyriadProLight/Myriad-pro-regular.svg#MyriadProLight') format('svg');
+    }
+    @font-face {
+        font-family: 'UTMAndrogyne';
+        src: url('UTMAndrogyne/UTMAndrogyne.eot');
+        src: url('UTMAndrogyne/UTMAndrogyne.eot') format('embedded-opentype'),
+             url('UTMAndrogyne/UTMAndrogyne.woff2') format('woff2'),
+             url('UTMAndrogyne/UTMAndrogyne.woff') format('woff'),
+             url('UTMAndrogyne/UTMAndrogyne.ttf') format('truetype'),
+             url('UTMAndrogyne/UTMAndrogyne.svg#UTMAndrogyne') format('svg');
+    }

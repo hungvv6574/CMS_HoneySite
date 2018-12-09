@@ -1,0 +1,99 @@
+﻿@model CMSSolutions.Websites.Models.DataViewerModel
+
+<section id="SectionNewsDetails">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="form-header">@Model.Settings.TitleFromContact</h1>
+            </div>
+            <div class="col-md-7">
+                <form id="frmContact">
+                    <div class="form-group">
+                        <label for="txtFullName">@Model.Settings.ContactFullName <span>*</span></label>
+                        <input type="text" class="form-control validate[required, maxSize[250]]" id="txtFullName" name="txtFullName">
+                    </div>
+                    <div class="form-group">
+                        <label for="txtEmail">@Model.Settings.ContactEmail <span>*</span></label>
+                        <input type="text" class="form-control validate[required, custom[email], maxSize[50]]" id="txtEmail" name="txtEmail">
+                    </div>
+                    <div class="form-group">
+                        <label for="txtPhoneNumber">@Model.Settings.ContactPhoneNumber</label>
+                        <input type="text" class="form-control validate[required, maxSize[50]]" id="txtPhoneNumber" name="txtPhoneNumber">
+                    </div>
+                    <div class="form-group">
+                        <label for="txtMessages">@Model.Settings.ContactMessages</label>
+                        <textarea class="form-control validate[required, maxSize[2000]]" rows="5" id="txtMessages" name="txtMessages"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <a href="javascript: onClickSave();" class="btn-send pull-right">@Model.Settings.ContactButtonSend</a>
+                    </div>
+                    <div class="clearfix"></div>
+                </form>
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $("#frmContact").validationEngine();
+                        $('#SectionNewsDetails .scroll-box').mCustomScrollbar({
+                            theme: "dark-3",
+                            mouseWheel: true,
+                            callbacks: false
+                        });
+                    });
+
+                    function onClickSave() {
+                        if (!validateContact()) {
+                            return;
+                        }
+
+                        var data = $("#frmContact").find("input, textarea").serialize();
+                        $.ajax({
+                            url: '@Url.Action("SendEmail", "Contact")',
+                            data: data,
+                            type: 'POST',
+                            dataType: 'json',
+                            success: function (result) {
+                                alert(result.Data);
+                            }
+                        });
+                    }
+                    function validateContact() {
+                        return $("#frmContact").validationEngine('validate');
+                    }
+                </script>
+            </div>
+
+            <div class="col-md-5 branch-store">
+                <div class="branch-store">
+                    <h2>@Model.Settings.TitleFromStore</h2>
+                    <div class="scroll-box">
+                        @if (Model.Stores != null)
+                        {
+                            for (int i = 0; i < Model.Stores.Count; i++)
+                            {
+                                var item = Model.Stores[i];
+                                <ul class="nav new-row">
+                                    <li>
+                                        <h3>@item.Name</h3>
+                                        @if (!string.IsNullOrEmpty(item.LogoUrl))
+                                        {
+                                            <img src="@item.LogoUrl"/>
+                                        }
+                                    </li>
+                                    <li>
+                                        <p>@Html.Raw(item.Address)</p>
+                                    </li>
+                                    <li>
+                                        <p>Đt: @item.PhoneNumber</p>
+                                    </li>
+                                </ul>
+                                if (i != Model.Stores.Count - 1)
+                                {
+                                    <div class="border-bottom"></div>
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

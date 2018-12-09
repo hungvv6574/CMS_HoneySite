@@ -1,0 +1,50 @@
+﻿<div class="box-controls">
+    <ul class="nav">
+        <li>
+            <form action="#" method="get" id="frmSearchForm">
+                <div id="search-textbox">
+                    <input type="text" id="txtKeywordSearch" name="txtKeywordSearch" placeholder="Từ khóa tìm kiếm" />
+                </div>
+                <div id="search-button">
+                    <a href="javascript: onClickSearch();">
+                        <img class="search" src="/Media/Default/Themes/button2.png" />
+                    </a>
+                </div>
+            </form>
+            <div class="clearfix"></div>
+        </li>
+        <li>
+            <a id="shop-cart" href="/gio-hang">
+                <img src="/Media/Default/Themes/button3.png" />
+            </a>
+        </li>
+    </ul>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#txtKeywordSearch').on('keypress', function (event) {
+            if (event.which === 13) {
+                var textSearch = $(this).val();
+                $("#frmSearchForm").submit();
+            }
+        });
+    });
+
+    function validateForm() {
+        return $("#frmFormOrder").validationEngine('validate');
+    }
+
+    function onClickSearch() {
+        var src = $("#search-button a").find("img").attr("class");
+        if (src === "search") {
+            $("#search-button a").find("img").attr("class", "exit");
+            $("#search-button a").find("img").attr("src", "/Media/Default/Themes/button4.png");
+            $("#search-textbox").show(1000);
+        }
+        if (src === "exit") {
+            $("#search-button a").find("img").attr("class", "search");
+            $("#search-button a").find("img").attr("src", "/Media/Default/Themes/button2.png");
+            $("#search-textbox").hide(1000);
+        }
+    }
+</script>

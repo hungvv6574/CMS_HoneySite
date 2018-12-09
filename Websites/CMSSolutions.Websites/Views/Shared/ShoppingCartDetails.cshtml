@@ -1,0 +1,146 @@
+﻿@using Newtonsoft.Json
+@model CMSSolutions.Websites.Models.DataViewerModel
+
+<section id="SectionShoppingCartDetails">
+    <form id="frmCartDetails">
+        <div class="container">
+            <div class="row">
+                <h1>Giỏ hàng của bạn</h1>
+            </div>
+            <div class="row">
+                <div class="table-responsive">
+                    <table id="tblCart">
+                        <thead>
+                            <tr>
+                                <th style="min-width: 200px;"></th>
+                                <th width='15%'>
+                                    <label>Thể tích</label>
+                                </th>
+                                <th width='15%'>
+                                    <label>Số lượng</label>
+                                </th>
+                                <th width='15%'>
+                                    <label>Đơn giá</label>
+                                </th>
+                                <th width='15%'>
+                                    <label>Thành tiền</label>
+                                </th>
+                                <th width='1%'></th>
+                            </tr>
+                        </thead>
+                        @if (Model.ListCart != null && Model.ListCart.Count > 0)
+                        {
+                            <tbody data-bind='foreach: lines'>
+                                <tr>
+                                    <td style="padding-left: 0px !important;">
+                                        <p data-bind='text: productName'></p>
+                                    </td>
+                                    <td class="capacity">
+                                        <input type="text" disabled="disabled" data-bind='value: capacity' />
+                                    </td>
+                                    <td class="normal">
+                                        <input type="text" data-bind='value: quantity, valueUpdate: "afterkeydown"' />
+                                    </td>
+                                    <td class="normal">
+                                        <input type="text" disabled="disabled" data-bind='money: price' />
+                                    </td>
+                                    <td class="normal">
+                                        <input type="text" disabled="disabled" data-bind='money: total' />
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-default" data-bind='click: $parent.removeLine'><i class="fa fa-lg fa-fw fa-times" style="color: red;"></i></button>
+                                    
+                                    </td>
+                                </tr>
+                            </tbody>
+                        }
+                        else
+                        {
+                            <tbody>
+                                <tr>
+                                    <td colspan="6" style="padding-left: 0px !important;text-align: left;">
+                                        <p style="text-align: left;">Không có dữ liệu.</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        }
+                    </table>
+                </div>
+                @if (Model.ListCart != null && Model.ListCart.Count > 0)
+                {
+                    <p class="total-money">
+                        <label>TỔNG</label> <span data-bind='text: formatCurrency(grandTotal())'> </span>
+                    </p>
+                }
+                else
+                {
+                    <p class="total-money">
+                        <label>TỔNG</label> <span>0 VNĐ</span>
+                    </p>
+                }
+                <div class="btn-customCart float-fix">
+                    <a data-bind='click: save' href="javascript: void(0);">Thanh toán</a>
+                </div>
+                <input type="hidden" id="txtDataCart" name="txtDataCart"/>
+            </div>
+        </div>
+    </form>
+</section>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var list = $.parseJSON($.parseHTML('@(Utilities.ConvertObjectToJson(Model.ListCart))')[0].textContent);
+        var CartLine = function (productId, productName, capacity, quantity, price) {
+            var self = this;
+            self.productId = ko.observable(productId);
+            self.productName = ko.observable(productName);
+            self.capacity = ko.observable(capacity);
+            self.quantity = ko.observable(quantity || 1).extend({ required: true, min: 1, max: 99, number: true });
+            self.price = ko.observable(price);
+            self.total = ko.computed(function () {
+                return parseInt(self.price()) * parseInt("0" + self.quantity(), 10);
+            });
+        };
+
+        var Cart = function (data) {
+            var self = this;
+            self.lines = ko.observableArray(ko.utils.arrayMap(data, function (row) {
+                return new CartLine(row.ProductId, row.ProductName, row.Capacity, row.Quantity, row.Price);
+            }));
+
+            self.grandTotal = ko.computed(function () {
+                var total = 0;
+                $.each(self.lines(), function() {
+                    total += this.total();
+                });
+            
+                return total;
+            });
+            self.removeLine = function (line) {
+                self.lines.remove(line);
+            };
+            self.save = function () {
+                if (data.length <= 0) {
+                    alert("Bạn phải thêm sản phẩm vào giỏ hàng mới có thể thực hiện thanh toán.");
+                    return;
+                }
+                var dataToSave = $.map(self.lines(), function (line) {
+                    return {
+                        ProductId: line.productId(),
+                        ProductName: line.productName(),
+                        Capacity: line.capacity(),
+                        Quantity: line.quantity(),
+                        Price: line.price(),
+                        Total: line.total(),
+                    };
+                });
+                $("#txtDataCart").val(JSON.stringify(dataToSave));
+                $('#frmCartDetails').attr('method', 'POST');
+                $('#frmCartDetails').attr('action', '@Url.Action("SaveCart", "ShoppingCart")');
+                $("#frmCartDetails").submit();
+            };
+        };
+
+        ko.applyBindings(new Cart(list));
+    });
+</script>
